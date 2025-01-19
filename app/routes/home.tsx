@@ -1,13 +1,21 @@
+import { Box } from "@yamada-ui/react";
+import { getAllArticles } from "~/services/article";
+import { ArticleList } from "../components/home/ArticleList";
+import { Hero } from "../components/home/Hero";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
+export async function loader() {
+  return {
+    articles: getAllArticles(),
+  };
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function HomePage({ loaderData }: Route.ComponentProps) {
+  const { articles } = loaderData;
+  return (
+    <Box>
+      <Hero />
+      <ArticleList articles={articles} />
+    </Box>
+  );
 }
