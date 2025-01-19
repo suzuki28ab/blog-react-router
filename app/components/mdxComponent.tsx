@@ -82,20 +82,12 @@ export const mdxComponents = {
         keyof LinkProps
       >
   ) => {
-    const isBrowser = typeof window !== "undefined";
-    const isExternalDomain =
-      !!props.href &&
-      isBrowser &&
-      (props.href.startsWith("http") || props.href.startsWith("//")) &&
-      new URL(props.href, window.location.href).origin !==
-        window.location.origin;
-
     return (
       <Link
         color="blue.500"
         textDecoration="underline"
-        target={isExternalDomain ? "_blank" : undefined}
-        rel={isExternalDomain ? "noopener noreferrer" : undefined}
+        target={"_blank"}
+        rel={"noopener noreferrer"}
         {...props}
       />
     );
