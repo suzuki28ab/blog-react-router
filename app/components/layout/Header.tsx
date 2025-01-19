@@ -15,7 +15,17 @@ export const Header = ({
 
   return (
     <>
-      <Box as="header" bg="brand.300" py={{ base: 4, md: 6 }} boxShadow="sm">
+      <Box
+        as="header"
+        bg="brand.300"
+        py={{ base: 4, md: 6 }}
+        pr={{ base: "15%", md: "0" }}
+        boxShadow="sm"
+        position="fixed"
+        width="100%"
+        top={0}
+        zIndex={10}
+      >
         <Flex
           align="center"
           justify={{ base: "center", md: "space-around" }}

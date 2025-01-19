@@ -1,29 +1,36 @@
-import { Box, Button, Heading } from "@yamada-ui/react";
+import { Box, Heading, Text } from "@yamada-ui/react";
 import { Link } from "react-router";
 
 type ArticleCardProps = {
   title: string;
   slug: string;
+  createdAt: string;
 };
 
-export const ArticleCard = ({ title, slug }: ArticleCardProps) => {
+export const ArticleCard = ({ title, slug, createdAt }: ArticleCardProps) => {
   return (
-    <Box bg="white" boxShadow="md" borderRadius="md" overflow="hidden">
+    <Box
+      as={Link}
+      to={`/articles/${slug}`}
+      bg="white"
+      boxShadow="md"
+      borderRadius="md"
+      overflow="hidden"
+      transition="all 0.2s"
+      _hover={{
+        transform: "translateY(-4px)",
+        boxShadow: "lg",
+      }}
+      cursor="pointer"
+      textDecoration="none"
+    >
       <Box p={4}>
         <Heading fontSize="lg" mb={2} color="brand.300">
           {title}
         </Heading>
-
-        <Button
-          as={Link}
-          to={`/articles/${slug}`}
-          mt={4}
-          colorScheme="blue"
-          variant="outline"
-          size="sm"
-        >
-          Read More
-        </Button>
+        <Text fontSize="sm" color="gray.500">
+          {createdAt}
+        </Text>
       </Box>
     </Box>
   );
