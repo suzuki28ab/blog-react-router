@@ -8,7 +8,7 @@ export const Header = ({
   categories,
   tags,
 }: {
-  categories: string[];
+  categories: { label: string; value: string }[];
   tags: string[];
 }) => {
   const [toggle, setToggle] = useState(false);

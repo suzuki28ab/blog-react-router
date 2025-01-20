@@ -43,20 +43,24 @@ export function getArticlesByTag(tag: string): Article[] {
   return getAllArticles().filter((article) => article.tags?.includes(tag));
 }
 
-export function getAllCategories(): string[] {
+export function getAllCategories(): { label: string; value: string }[] {
   const articles = getAllArticles();
+  // categoryが{ label: string; value: string }型なら、以下のようにvalueを取り出す
   const categories = [
     ...new Set(articles.map((article) => article.category.value)),
   ];
 
-  // Move "その他" to the end if it exists
   const otherIndex = categories.indexOf("other");
   if (otherIndex !== -1) {
     categories.splice(otherIndex, 1);
     categories.push("other");
   }
 
-  return categories;
+  // { label, value }型に変換して返却
+  return categories.map((cat) => ({
+    label: cat,
+    value: cat,
+  }));
 }
 
 export function getAllTags(): string[] {

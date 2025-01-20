@@ -15,7 +15,7 @@ import { Link } from "react-router";
 type SideBarProps = {
   toggle: boolean;
   onClose: () => void;
-  categories: string[];
+  categories: { label: string; value: string }[];
   tags: string[];
 };
 
@@ -47,15 +47,15 @@ const SideBar = ({ toggle, onClose, categories, tags }: SideBarProps) => {
       </Text>
       <List fontSize="sm">
         {categories.map((category) => (
-          <ListItem key={category}>
+          <ListItem key={category.value}>
             <YamadaLink
               display="block"
               pl={8}
               py={2}
               as={Link}
-              to={`/category/${encodeURIComponent(category)}/1`}
+              to={`/category/${category.value}/1`}
             >
-              {category}
+              {category.label}
             </YamadaLink>
           </ListItem>
         ))}
@@ -67,7 +67,7 @@ const SideBar = ({ toggle, onClose, categories, tags }: SideBarProps) => {
       <Box px={4} pb={4}>
         <Wrap gap="md">
           {tags.map((tag) => (
-            <Link key={tag} to={`/tag/${encodeURIComponent(tag)}/1`}>
+            <Link key={tag} to={`/tag/${tag}/1`}>
               <Tag>{tag}</Tag>
             </Link>
           ))}
