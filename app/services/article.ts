@@ -5,7 +5,7 @@ import path from "node:path";
 export type Article = {
   slug: string;
   title: string;
-  category: { label: string; value: string };
+  category: string;
   tags?: string[];
   createdAt: string;
 };
@@ -34,33 +34,23 @@ export function getAllArticles(): Article[] {
 }
 
 export function getArticlesByCategory(category: string): Article[] {
-  return getAllArticles().filter(
-    (article) => article.category.value === category
-  );
+  return getAllArticles().filter((article) => article.category === category);
 }
 
 export function getArticlesByTag(tag: string): Article[] {
   return getAllArticles().filter((article) => article.tags?.includes(tag));
 }
 
-export function getAllCategories(): { label: string; value: string }[] {
+export function getAllCategories(): string[] {
   const articles = getAllArticles();
-  // categoryが{ label: string; value: string }型なら、以下のようにvalueを取り出す
-  const categories = [
-    ...new Set(articles.map((article) => article.category.value)),
-  ];
+  const categories = [...new Set(articles.map((article) => article.category))];
 
   const otherIndex = categories.indexOf("other");
   if (otherIndex !== -1) {
     categories.splice(otherIndex, 1);
     categories.push("other");
   }
-
-  // { label, value }型に変換して返却
-  return categories.map((cat) => ({
-    label: cat,
-    value: cat,
-  }));
+  return categories;
 }
 
 export function getAllTags(): string[] {

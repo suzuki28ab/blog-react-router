@@ -25,12 +25,12 @@ export default {
     // カテゴリーページ
     const categories = getAllCategories();
     categories.forEach((category) => {
-      const categoryArticles = getArticlesByCategory(category.value);
+      const categoryArticles = getArticlesByCategory(category);
       const totalPages = Math.ceil(categoryArticles.length / ITEMS_PER_PAGE);
 
       // 1ページ目から最後のページまでのパスを生成
       for (let page = 1; page <= totalPages; page++) {
-        paths.push(`/category/${category.value}/${page}`);
+        paths.push(`/category/${category}/${page}`);
       }
     });
 

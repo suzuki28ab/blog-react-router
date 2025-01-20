@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text } from "@yamada-ui/react";
+import { Box, Container, HStack, Heading, Tag, Text } from "@yamada-ui/react";
 import { type LoaderFunctionArgs, Outlet } from "react-router";
 import { getAllArticles } from "~/services/article";
 import type { Route } from "./+types/ArticleLayout";
@@ -20,14 +20,26 @@ export default function ArticleLayout({ loaderData }: Route.ComponentProps) {
       <Container maxW="1200px" mx="auto">
         <Box as="main" p="6" bg="white" rounded="md" shadow="md">
           {article && (
-            <>
-              <Text fontSize="sm" color="gray.500" mb="4">
-                {article.createdAt}
-              </Text>
-              <Heading as="h1" fontSize="3xl" mb={4} color="brand.300">
+            <Box borderBottom="4px solid #e2e8f0" pb={4} mb={4}>
+              <Tag colorScheme="primary" size="sm" mb={2}>
+                {article.category}
+              </Tag>
+              <Heading as="h1" fontSize="3xl" mb={2} color="brand.300">
                 {article.title}
               </Heading>
-            </>
+              <Text fontSize="sm" color="gray.500" mb={2}>
+                {article.createdAt}
+              </Text>
+              {article.tags && article.tags.length > 0 && (
+                <HStack spacing={2} mb={4} flexWrap="wrap">
+                  {article.tags.map((tag) => (
+                    <Tag key={tag} size="sm" variant="outline">
+                      {tag}
+                    </Tag>
+                  ))}
+                </HStack>
+              )}
+            </Box>
           )}
           <Outlet />
         </Box>
