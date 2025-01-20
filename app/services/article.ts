@@ -5,7 +5,7 @@ import path from "node:path";
 export type Article = {
   slug: string;
   title: string;
-  category: string;
+  category: { label: string; value: string };
   tags?: string[];
   createdAt: string;
 };
@@ -34,7 +34,9 @@ export function getAllArticles(): Article[] {
 }
 
 export function getArticlesByCategory(category: string): Article[] {
-  return getAllArticles().filter((article) => article.category === category);
+  return getAllArticles().filter(
+    (article) => article.category.value === category
+  );
 }
 
 export function getArticlesByTag(tag: string): Article[] {
@@ -43,13 +45,15 @@ export function getArticlesByTag(tag: string): Article[] {
 
 export function getAllCategories(): string[] {
   const articles = getAllArticles();
-  const categories = [...new Set(articles.map((article) => article.category))];
+  const categories = [
+    ...new Set(articles.map((article) => article.category.value)),
+  ];
 
   // Move "その他" to the end if it exists
-  const otherIndex = categories.indexOf("その他");
+  const otherIndex = categories.indexOf("other");
   if (otherIndex !== -1) {
     categories.splice(otherIndex, 1);
-    categories.push("その他");
+    categories.push("other");
   }
 
   return categories;
