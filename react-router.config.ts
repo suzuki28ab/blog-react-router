@@ -48,4 +48,5 @@ export default {
 
     return paths;
   },
+  ssr: true,
 } satisfies Config;
