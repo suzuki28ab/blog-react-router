@@ -47,9 +47,9 @@ export const ArticleList = ({
             sibling={1}
             onChange={(page) => {
               if (category) {
-                navigate(`/category/${category}/${page}`);
+                navigate(`/category/${encodeURIComponent(category)}/${page}`);
               } else if (tag) {
-                navigate(`/tag/${tag}/${page}`);
+                navigate(`/tag/${encodeURIComponent(tag)}/${page}`);
               }
             }}
           />
