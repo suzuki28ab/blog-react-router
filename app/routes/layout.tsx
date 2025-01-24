@@ -4,6 +4,13 @@ import { Header } from "~/components/layout/Header";
 import { getAllCategories, getAllTags } from "~/services/article";
 import type { Route } from "./+types/layout";
 
+export function meta() {
+  return [
+    { title: "頭寒足熱2" },
+    { description: "とあるプログラマーのブログ" },
+  ];
+}
+
 export async function loader() {
   const categories = getAllCategories();
   const tags = getAllTags();
