@@ -112,5 +112,31 @@ export const mdxComponents = {
         DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
         keyof CodeProps
       >
-  ) => <Code colorScheme="neutral" {...props} />,
+  ) => {
+    const isInPre = props.children && Array.isArray(props.children);
+
+    return (
+      <Code
+        whiteSpace={isInPre ? "pre" : "normal"}
+        display={isInPre ? "block" : "inline"}
+        overflowX={isInPre ? "auto" : "initial"}
+        padding={isInPre ? "0.4rem" : "0.2rem"}
+        fontSize={isInPre ? "sm" : "inherit"}
+        color={isInPre ? "inherit" : "emerald.500"}
+        {...props}
+      />
+    );
+  },
+  pre: (
+    props: DetailedHTMLProps<HTMLAttributes<HTMLPreElement>, HTMLPreElement>
+  ) => (
+    <pre
+      style={{
+        whiteSpace: "pre",
+        overflowX: "auto",
+        padding: "1rem",
+      }}
+      {...props}
+    />
+  ),
 };
