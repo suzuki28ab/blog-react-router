@@ -1,0 +1,34 @@
+---
+title: 最近読んだ中で気になった記事
+category: diary
+tags: ["Lingui", "Remix", "Cline"]
+createdAt: 2025-02-08
+---
+
+## [Mermaid Graphical Editorを使うとVSCodeでサクサク図が書けるよ](https://zenn.dev/yskn_sid25/articles/67d848f70d7a5b)
+
+ほんとにたまーに図を書かなきゃいけないときがあって、そのときになったら使おうと思います。今はただの備忘録。
+
+## [TypeScriptでどこまで「関数型プログラミング」するか ─ 「手続き Haskell」から考察する](https://user-first.ikyu.co.jp/entry/2023/12/10/134411)
+
+TypeScriptバックエンドを書くときに、どこまで関数型っぽく書くか難しいなと思っています。
+
+そもそも関数型言語をあんまり触ったことがないのですが、エッセンスはある程度得たつもりではいて、そのうえで TypeScript でどこまで関数型っぽく書くか、というのはまた別で難しいです。
+
+関数型ドメインモデリングとかもちょっと勉強してみたんですけど、やっぱり TypeScript 自体が関数型言語ではないので、あくまでちょっとだけ関数型のエッセンスを取り入れるぐらいが落とし所かなーと、記事読んで思ってました。
+
+## [【Laravel】chunk と chunkById を比較してわかったこと](https://kraf.jp/blog/5620)
+これは実務で使う機会があったので、参考になりました。
+
+```php
+$usersQuery = User::where('point', '>', 100);
+$users->chunk(100, function ($users) {
+    foreach ($users as $user) {
+        $user->update(['point' => 0]);
+    }
+});
+```
+
+まあなんかこんな感じのコードを書いていて、期待している挙動にはならなかったんですね。
+
+記事見て納得でした。
