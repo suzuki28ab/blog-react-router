@@ -1,0 +1,53 @@
+---
+title: bunでGoogle Cloud Storageのファイルダウンロードができなかった
+category: programming
+tags: ["bun", "GCS"]
+createdAt: 2025-03-23
+---
+
+正確に言うと @google-cloud/storage ライブラリの download 関数が機能しなかった。
+
+```ts
+// 省略
+const file = await bucket.file(fileId);
+await file.download({
+  destination: `tmp/${fileId}`,
+});
+```
+雑に書くとこんなコードがあったんですけど、これが何故か動かなくて、download 関数が全く機能していないような挙動でした。
+
+[issueありました。](https://github.com/oven-sh/bun/issues/7747)
+
+ので代わりに、
+```ts
+await new Promise((resolve, reject) => {
+  const file = await bucket.file(fileId);
+  const readStream = file.createReadStream();
+  const writeStream = fs.createWriteStream(`tmp/${fileId}`);
+
+  readStream.on("error", (err) => {
+    console.error(`Error reading ${file.name}:`, err);
+    reject(err);
+  });
+
+  writeStream.on("error", (err) => {
+    console.error(`Error writing ${file.name}:`, err);
+    reject(err);
+  });
+
+  writeStream.on("finish", () => {
+    console.log(`Finished downloading ${file.name}`);
+    resolve(null);
+  });
+
+  readStream.pipe(writeStream);
+});
+```
+
+という感じで、stream で無理やりダウンロードするようにしました。
+
+一応 bun 自体に S3 のクライアント機能があって、GCS もサポートされているようなので試してみたんですが、特定のディレクトリにあるファイル一覧を取得する、ということができなくて、今回は見送りました。
+
+[bun + S3](https://bun.sh/docs/api/s3)
+
+[list function が欲しい！](https://github.com/oven-sh/bun/issues/16495)
